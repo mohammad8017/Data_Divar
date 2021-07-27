@@ -69,6 +69,8 @@ headers['Authorization'] = tmpToken
 
 #eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiMDkxMDAwMzk3MzAiLCJleHAiOjE2Mjg1OTQ4NDEuOTkwMDg1LCJ2ZXJpZmllZF90aW1lIjoxNjI3Mjk4ODQxLjk5MDU0LCJ1c2VyLXR5cGUiOiJwZXJzb25hbCIsInVzZXItdHlwZS1mYSI6Ilx1MDY3ZVx1MDY0Nlx1MDY0NCBcdTA2MzRcdTA2MmVcdTA2MzVcdTA2Y2MifQ.C6EJfXaxDILThoWk7jgunG4NMPe0a_pnXPyfrdn3Qp0
 
+brandExist = []
+
 allLinks = []
 counter = 0
 
@@ -121,6 +123,10 @@ for step in range(5):
 			tmp = changeNumToEnglish(tmp)
 			allInfo.append(tmp)
 
+
+		if baseInfo2[1] not in brandExist:
+			brandExist.append(baseInfo2[1])
+
 		tmpExp = ''
 		try:
 			tmpExp = changeNumToEnglish(exp[0])
@@ -144,6 +150,10 @@ for step in range(5):
 
 print("total:", str(counter))
 file.close()
+
+
+brandExist.sort()
+
 
 
 
