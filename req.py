@@ -51,14 +51,14 @@ payload = json.dumps({
 		"value": "motorcycles"
 		}
 	},
-	"last-post-date": 663455687336458
+	"last-post-date": 663474962109497
 	})
 headers = {
 'Content-Type': 'application/json',
 'Cookie': 'city=tehran; multi-city=tehran%7C'
 }
 
-tmpLast = '663455687336458'
+tmpLast = '663474962109497'
 
 file = open("C:/Users/Lenovo/Desktop/tamrin/Data_Divar/out.csv", 'w', newline="", encoding="utf-8")
 writeFile = csv.writer(file, quoting=csv.QUOTE_NONE)
@@ -72,7 +72,7 @@ headers['Authorization'] = tmpToken
 allLinks = []
 counter = 0
 
-for step in range(1):
+for step in range(5):
 
 	response = requests.request("POST", url, headers=headers, data=payload)
 	txt = response.text
