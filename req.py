@@ -60,7 +60,7 @@ headers = {
 
 tmpLast = '663455687336458'
 
-file = open("out.csv", 'w', newline="", encoding="utf-8")
+file = open("C:/Users/Lenovo/Desktop/tamrin/Data_Divar/out.csv", 'w', newline="", encoding="utf-8")
 writeFile = csv.writer(file, quoting=csv.QUOTE_NONE)
 writeFile.writerow(['title', ' kind of sale', 'brand', 'year', 'price', 'usage', 'explanation'])
 
@@ -72,7 +72,7 @@ headers['Authorization'] = tmpToken
 allLinks = []
 counter = 0
 
-for step in range(5):
+for step in range(1):
 
 	response = requests.request("POST", url, headers=headers, data=payload)
 	txt = response.text
