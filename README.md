@@ -1,5 +1,5 @@
 # Data_Divar
-give data from divar.ir and cleaning and etc.
+give data from divar.ir and cleaning for predict average price of given information of a motorcycle.
 
 
 url:https://divar.ir/s/tehran/motorcycles
