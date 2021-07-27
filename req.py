@@ -74,6 +74,8 @@ brandExist = []
 allLinks = []
 counter = 0
 
+allAdds = [] #all adds stored in file
+
 for step in range(5):
 
 	response = requests.request("POST", url, headers=headers, data=payload)
@@ -134,6 +136,7 @@ for step in range(5):
 			tmpExp = ' '
 		allInfo.append(tmpExp)
 		writeFile.writerow(allInfo) 
+		allAdds.append(allInfo)
 		counter += 1
 		print('OK '+ str(step+1) + '.' + str(links.index(link)+1))	
 
@@ -153,6 +156,17 @@ file.close()
 
 
 brandExist.sort()
+allAdds.sort(key=lambda x: x[2])
+
+adsDict = {}
+
+
+for i in range(len(brandExist)):
+	tempList = []
+	for j in range(len(allAdds)):
+		if allAdds[j][2] == brandExist[i]:
+			tempList.append(allAdds[j])
+	adsDict[brandExist[i]] = tempList		
 
 
 
