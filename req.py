@@ -10,7 +10,7 @@ from requests.sessions import extract_cookies_to_jar
 
 
 def changeNumToEnglish(tmpStr:str): # data cleaning
-	return tmpStr.replace('٫','').replace('۰','0').replace('۱','1').replace('۲','2').replace('۳','3').replace('۴','4').replace('۵','5').replace('۶','6').replace('۷','7').replace('۸','8').replace('۹','9').replace(' تومان', '').replace('توافقی', '0').replace('،' , ' ')
+	return tmpStr.replace('٫','').replace('۰','0').replace('۱','1').replace('۲','2').replace('۳','3').replace('۴','4').replace('۵','5').replace('۶','6').replace('۷','7').replace('۸','8').replace('۹','9').replace(' تومان', '').replace('توافقی', '0').replace('،' , ' ').replace('هستم', '0')
 
 
 def findBrands(txt:str):
@@ -112,7 +112,7 @@ for step in range(1):
 
 		for i in range(5):
 			if len(baseInfo2) == 4:
-				baseInfo2.insert(1,'does\'nt report')
+				baseInfo2.insert(1,'سایر')
 			tmp = baseInfo2[i]
 			tmp = list(tmp)
 			tmp = ''.join(tmp[:]) 
