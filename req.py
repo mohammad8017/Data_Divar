@@ -8,6 +8,8 @@ from requests.sessions import extract_cookies_to_jar
 import pandas
 from sklearn import linear_model, preprocessing
 import matplotlib.pyplot as plt
+from itertools import combinations
+from scipy.stats import ttest_ind
 
 
 
@@ -99,6 +101,8 @@ for step in range(1):
 	explanationReg = "<p class=\"kt-description-row__text post-description kt-description-row__text--primary\">([a-zA-Zا-ی\s0-9۰-۹،-]+)"
 	phoneNumReg = "<a class=\"kt-unexpandable-row__action kt-text-truncate ltr\" href=\"tel:09397777569\">(۰-۹)+<\/a>"
 
+
+	#find pattern in data of url and write to csv file
 	for link in links:
 		if link not in allLinks:
 			allLinks.append(link)
@@ -159,7 +163,7 @@ print("total:", str(counter))
 file.close()
 
 
-brandExist.sort()
+brandExist.sort() # all brands we have in data
 allAdds.sort(key=lambda x: x[2])
 
 adsDict = {}
@@ -228,6 +232,20 @@ plt.ylabel('year')
 plt.title('normalize')
 plt.show()
 
+
+
+T_test = []
+t, p = ttest_ind(usageTmp, yearTmp)
+T_test.append(p)
+t, p = ttest_ind(usageTmp, brandTmp)
+T_test.append(p)
+t, p = ttest_ind(yearTmp, brandTmp)
+T_test.append(p)
+
+ind = T_test.index(max(T_test))
+if ind == 0: print('most similarity : usage & year')
+elif ind == 1: print('most similarity : usage & brand')
+else: print('most similarity : year & brand')
 # for i in range(len(allAdds)):
 	
 # 	usageTmp[i] = (usageTmp[i] - min(usageTmp))/(max(usageTmp) - min(usageTmp))
