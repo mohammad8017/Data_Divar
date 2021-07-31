@@ -185,21 +185,21 @@ for ad in allAdds:
 	yearTmp.append(int(ad[3]))
 	brandTmp.append(brandExist.index(ad[2]))
 
+plt.subplot(3,1,1)
+plt.plot(yearTmp, usageTmp, 'ro')
+plt.xlabel('year') 
+plt.ylabel('usage')
 
-# plt.plot(yearTmp, usageTmp, 'ro')
-# plt.xlabel('year') 
-# plt.ylabel('usage')
-# plt.show()
+plt.subplot(3,1,2)
+plt.plot(brandTmp, usageTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('usage')
 
-# plt.plot(brandTmp, usageTmp, 'ro')
-# plt.xlabel('brand') 
-# plt.ylabel('usage')
-# plt.show()
-
-# plt.plot(brandTmp, yearTmp, 'ro')
-# plt.xlabel('brand') 
-# plt.ylabel('year')
-# plt.show()
+plt.subplot(3,1,3)
+plt.plot(brandTmp, yearTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('year')
+plt.show()
 
 
 #--------------normalization-----------------
@@ -215,23 +215,24 @@ brandTmp = numpy.asarray(brandTmp)
 brandTmp = preprocessing.normalize([brandTmp])
 brandTmp = (brandTmp.tolist())[0]
 
-# plt.plot(yearTmp, usageTmp, 'ro')
-# plt.xlabel('year') 
-# plt.ylabel('usage')
-# plt.title('normalize')
-# plt.show()
+plt.subplot(1,3,1)
+plt.plot(yearTmp, usageTmp, 'ro')
+plt.xlabel('year') 
+plt.ylabel('usage')
+plt.title('normalize')
 
-# plt.plot(brandTmp, usageTmp, 'ro')
-# plt.xlabel('brand') 
-# plt.ylabel('usage')
-# plt.title('normalize')
-# plt.show()
+plt.subplot(1,3,2)
+plt.plot(brandTmp, usageTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('usage')
+plt.title('normalize')
 
-# plt.plot(brandTmp, yearTmp, 'ro')
-# plt.xlabel('brand') 
-# plt.ylabel('year')
-# plt.title('normalize')
-# plt.show()
+plt.subplot(1,3,3)
+plt.plot(brandTmp, yearTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('year')
+plt.title('normalize')
+plt.show()
 
 
 
@@ -261,14 +262,15 @@ x = p.components_
 temp = x.tolist()
 x1, x2, x3 = x[0], x[1], x[2]
 
+plt.subplot(1,3,1)
 plt.plot(x1, x2, 'ro')
 plt.title('after PCA')
-plt.show()
 
+plt.subplot(1,3,2)
 plt.plot(x1, x3, 'ro')
 plt.title('after PCA')
-plt.show()
 
+plt.subplot(1,3,3)
 plt.plot(x2, x3, 'ro')
 plt.title('after PCA')
 plt.show()
