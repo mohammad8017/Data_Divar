@@ -10,6 +10,7 @@ from sklearn import linear_model, preprocessing
 import matplotlib.pyplot as plt
 from itertools import combinations
 from scipy.stats import ttest_ind
+from sklearn.decomposition import PCA
 
 
 
@@ -185,20 +186,20 @@ for ad in allAdds:
 	brandTmp.append(brandExist.index(ad[2]))
 
 
-plt.plot(yearTmp, usageTmp, 'ro')
-plt.xlabel('year') 
-plt.ylabel('usage')
-plt.show()
+# plt.plot(yearTmp, usageTmp, 'ro')
+# plt.xlabel('year') 
+# plt.ylabel('usage')
+# plt.show()
 
-plt.plot(brandTmp, usageTmp, 'ro')
-plt.xlabel('brand') 
-plt.ylabel('usage')
-plt.show()
+# plt.plot(brandTmp, usageTmp, 'ro')
+# plt.xlabel('brand') 
+# plt.ylabel('usage')
+# plt.show()
 
-plt.plot(brandTmp, yearTmp, 'ro')
-plt.xlabel('brand') 
-plt.ylabel('year')
-plt.show()
+# plt.plot(brandTmp, yearTmp, 'ro')
+# plt.xlabel('brand') 
+# plt.ylabel('year')
+# plt.show()
 
 
 #--------------normalization-----------------
@@ -214,23 +215,23 @@ brandTmp = numpy.asarray(brandTmp)
 brandTmp = preprocessing.normalize([brandTmp])
 brandTmp = (brandTmp.tolist())[0]
 
-plt.plot(yearTmp, usageTmp, 'ro')
-plt.xlabel('year') 
-plt.ylabel('usage')
-plt.title('normalize')
-plt.show()
+# plt.plot(yearTmp, usageTmp, 'ro')
+# plt.xlabel('year') 
+# plt.ylabel('usage')
+# plt.title('normalize')
+# plt.show()
 
-plt.plot(brandTmp, usageTmp, 'ro')
-plt.xlabel('brand') 
-plt.ylabel('usage')
-plt.title('normalize')
-plt.show()
+# plt.plot(brandTmp, usageTmp, 'ro')
+# plt.xlabel('brand') 
+# plt.ylabel('usage')
+# plt.title('normalize')
+# plt.show()
 
-plt.plot(brandTmp, yearTmp, 'ro')
-plt.xlabel('brand') 
-plt.ylabel('year')
-plt.title('normalize')
-plt.show()
+# plt.plot(brandTmp, yearTmp, 'ro')
+# plt.xlabel('brand') 
+# plt.ylabel('year')
+# plt.title('normalize')
+# plt.show()
 
 
 
@@ -246,6 +247,33 @@ ind = T_test.index(max(T_test))
 if ind == 0: print('most similarity : usage & year')
 elif ind == 1: print('most similarity : usage & brand')
 else: print('most similarity : year & brand')
+
+
+
+
+
+arr = [usageTmp, yearTmp, brandTmp]
+pca = PCA(n_components=3)
+p = pca.fit(arr)
+print(p.components_)
+x = p.components_
+
+temp = x.tolist()
+x1, x2, x3 = x[0], x[1], x[2]
+
+plt.plot(x1, x2, 'ro')
+plt.title('after PCA')
+plt.show()
+
+plt.plot(x1, x3, 'ro')
+plt.title('after PCA')
+plt.show()
+
+plt.plot(x2, x3, 'ro')
+plt.title('after PCA')
+plt.show()
+
+
 # for i in range(len(allAdds)):
 	
 # 	usageTmp[i] = (usageTmp[i] - min(usageTmp))/(max(usageTmp) - min(usageTmp))
