@@ -1,9 +1,13 @@
+import numpy
 import requests
 import json
 from datetime import date
 import re
 import csv
 from requests.sessions import extract_cookies_to_jar
+import pandas
+from sklearn import linear_model, preprocessing
+import matplotlib.pyplot as plt
 
 
 
@@ -76,7 +80,7 @@ counter = 0
 
 allAdds = [] #all adds stored in file
 
-for step in range(5):
+for step in range(1):
 
 	response = requests.request("POST", url, headers=headers, data=payload)
 	txt = response.text
@@ -161,13 +165,81 @@ allAdds.sort(key=lambda x: x[2])
 adsDict = {}
 
 
-for i in range(len(brandExist)):
-	tempList = []
-	for j in range(len(allAdds)):
-		if allAdds[j][2] == brandExist[i]:
-			tempList.append(allAdds[j])
-	adsDict[brandExist[i]] = tempList		
+# for i in range(len(brandExist)):
+# 	tempList = []
+# 	for j in range(len(allAdds)):
+# 		if allAdds[j][2] == brandExist[i]:
+# 			tempList.append(allAdds[j])
+# 	adsDict[brandExist[i]] = tempList		
 
 
+#--------------visualization-----------------
+usageTmp, yearTmp, brandTmp = [], [], []
+for ad in allAdds:
+	usageTmp.append(int(ad[5]))
+	yearTmp.append(int(ad[3]))
+	brandTmp.append(brandExist.index(ad[2]))
 
+
+plt.plot(yearTmp, usageTmp, 'ro')
+plt.xlabel('year') 
+plt.ylabel('usage')
+plt.show()
+
+plt.plot(brandTmp, usageTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('usage')
+plt.show()
+
+plt.plot(brandTmp, yearTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('year')
+plt.show()
+
+
+#--------------normalization-----------------
+usageTmp = numpy.asarray(usageTmp)
+usageTmp = preprocessing.normalize([usageTmp])
+usageTmp = (usageTmp.tolist())[0]
+
+yearTmp = numpy.asarray(yearTmp)
+yearTmp = preprocessing.normalize([yearTmp])
+yearTmp = (yearTmp.tolist())[0]
+
+brandTmp = numpy.asarray(brandTmp)
+brandTmp = preprocessing.normalize([brandTmp])
+brandTmp = (brandTmp.tolist())[0]
+
+plt.plot(yearTmp, usageTmp, 'ro')
+plt.xlabel('year') 
+plt.ylabel('usage')
+plt.title('normalize')
+plt.show()
+
+plt.plot(brandTmp, usageTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('usage')
+plt.title('normalize')
+plt.show()
+
+plt.plot(brandTmp, yearTmp, 'ro')
+plt.xlabel('brand') 
+plt.ylabel('year')
+plt.title('normalize')
+plt.show()
+
+# for i in range(len(allAdds)):
+	
+# 	usageTmp[i] = (usageTmp[i] - min(usageTmp))/(max(usageTmp) - min(usageTmp))
+# 	yearTmp[i] = (yearTmp[i] - min(yearTmp))/(max(yearTmp) - min(yearTmp))
+# 	brandTmp[i] = (brandTmp[i] - min(brandTmp))/(max(brandTmp) - min(brandTmp))
+
+# data = pandas.read_csv('C:/Users/Lenovo/Desktop/tamrin/Data_Divar/out.csv')
+# X = data[['brand', 'year', 'usage']]
+# y = data[['price']]
+
+# regr = linear_model.LinearRegression()
+# regr.fit(X, y)
+
+# predictedPrice = regr.predict([['بنلی 300' , 1399, 1000]])
 
