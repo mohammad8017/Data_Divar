@@ -59,14 +59,14 @@ payload = json.dumps({
 		"value": "motorcycles"
 		}
 	},
-	"last-post-date": 663474962109497
+	"last-post-date": 664288732707541
 	})
 headers = {
 'Content-Type': 'application/json',
 'Cookie': 'city=tehran; multi-city=tehran%7C'
 }
 
-tmpLast = '663474962109497'
+tmpLast = '664288732707541'
 
 file = open("C:/Users/Lenovo/Desktop/tamrin/Data_Divar/out.csv", 'w', newline="", encoding="utf-8")
 writeFile = csv.writer(file, quoting=csv.QUOTE_NONE)
@@ -197,6 +197,12 @@ for i in range(len(allAdds)):
 		plt.plot(yearTmp[i], usageTmp[i], 'yo')		
 plt.xlabel('year') 
 plt.ylabel('usage')
+
+linear_model=numpy.polyfit(yearTmp, usageTmp,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(yearTmp), max(yearTmp)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
+
 plt.show()
 
 
@@ -209,6 +215,12 @@ for i in range(len(allAdds)):
 		plt.plot(brandTmp[i], usageTmp[i], 'yo')	
 plt.xlabel('brand') 
 plt.ylabel('usage')
+
+linear_model=numpy.polyfit(brandTmp, usageTmp,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
+
 plt.show()
 
 
@@ -221,6 +233,12 @@ for i in range(len(allAdds)):
 		plt.plot(brandTmp[i], yearTmp[i], 'yo')
 plt.xlabel('brand') 
 plt.ylabel('year')
+
+linear_model=numpy.polyfit(brandTmp, yearTmp,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
+
 plt.show()
 
 
@@ -247,6 +265,12 @@ for i in range(len(allAdds)):
 plt.xlabel('year') 
 plt.ylabel('usage')
 plt.title('normalize')
+
+linear_model=numpy.polyfit(yearTmp, usageTmp,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(yearTmp), max(yearTmp)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
+
 plt.show()
 
 for i in range(len(allAdds)):
@@ -259,6 +283,12 @@ for i in range(len(allAdds)):
 plt.xlabel('brand') 
 plt.ylabel('usage')
 plt.title('normalize')
+
+linear_model=numpy.polyfit(brandTmp, usageTmp,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
+
 plt.show()
 
 for i in range(len(allAdds)):
@@ -271,36 +301,28 @@ for i in range(len(allAdds)):
 plt.xlabel('brand') 
 plt.ylabel('year')
 plt.title('normalize')
+
+linear_model=numpy.polyfit(brandTmp, yearTmp,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
+
 plt.show()
 
 
 
 T_test = []
-t, p = ttest_ind(usageTmp, yearTmp, trim=.2)
+t, p = ttest_ind(usageTmp, yearTmp)
 T_test.append(p)
-t, p = ttest_ind(usageTmp, brandTmp, trim=.2)
+t, p = ttest_ind(usageTmp, brandTmp)
 T_test.append(p)
-t, p = ttest_ind(yearTmp, brandTmp, trim=.2)
+t, p = ttest_ind(yearTmp, brandTmp)
 T_test.append(p)
 
 ind = T_test.index(max(T_test))
 if ind == 0: print('most similarity : usage & year')
 elif ind == 1: print('most similarity : usage & brand')
 else: print('most similarity : year & brand')
-
-
-
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
-		plt.plot(yearTmp[i], usageTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
-		plt.plot(yearTmp[i], usageTmp[i], 'ro')
-	else:
-		plt.plot(yearTmp[i], usageTmp[i], 'yo')	
-plt.xlabel('year') 
-plt.ylabel('usage')
-plt.title('normalize')
-plt.show()
 
 
 
@@ -321,6 +343,10 @@ for i in range(len(allAdds)):
 	else:
 		plt.plot(x1[i], x2[i], 'yo')
 plt.title('after PCA')
+linear_model=numpy.polyfit(x1, x2,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(x1), max(x1)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
 plt.show()
 
 for i in range(len(allAdds)):
@@ -331,6 +357,10 @@ for i in range(len(allAdds)):
 	else:
 		plt.plot(x1[i], x3[i], 'yo')
 plt.title('after PCA')
+linear_model=numpy.polyfit(x1, x3,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(x1), max(x1)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
 plt.show()
 
 for i in range(len(allAdds)):
@@ -341,6 +371,10 @@ for i in range(len(allAdds)):
 	else:
 		plt.plot(x2[i], x3[i], 'yo')
 plt.title('after PCA')
+linear_model=numpy.polyfit(x2, x3,1)
+linear_model_fn=numpy.poly1d(linear_model)
+x_s=numpy.arange(min(x2), max(x2)+1)
+plt.plot(x_s,linear_model_fn(x_s),color="blue")
 plt.show()
 
 
