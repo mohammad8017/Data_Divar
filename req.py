@@ -276,11 +276,11 @@ plt.show()
 
 
 T_test = []
-t, p = ttest_ind(usageTmp, yearTmp)
+t, p = ttest_ind(usageTmp, yearTmp, trim=.2)
 T_test.append(p)
-t, p = ttest_ind(usageTmp, brandTmp)
+t, p = ttest_ind(usageTmp, brandTmp, trim=.2)
 T_test.append(p)
-t, p = ttest_ind(yearTmp, brandTmp)
+t, p = ttest_ind(yearTmp, brandTmp, trim=.2)
 T_test.append(p)
 
 ind = T_test.index(max(T_test))
@@ -290,12 +290,23 @@ else: print('most similarity : year & brand')
 
 
 
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(yearTmp[i], usageTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(yearTmp[i], usageTmp[i], 'ro')
+	else:
+		plt.plot(yearTmp[i], usageTmp[i], 'yo')	
+plt.xlabel('year') 
+plt.ylabel('usage')
+plt.title('normalize')
+plt.show()
+
 
 
 arr = [usageTmp, yearTmp, brandTmp]
 pca = PCA(n_components=3)
 p = pca.fit(arr)
-print(p.components_)
 x = p.components_
 
 temp = x.tolist()
