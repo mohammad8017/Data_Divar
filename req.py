@@ -203,6 +203,7 @@ linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(yearTmp), max(yearTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
+plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 
@@ -221,6 +222,7 @@ linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
+plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 
@@ -239,6 +241,7 @@ linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
+plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 
@@ -271,6 +274,7 @@ linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(yearTmp), max(yearTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
+plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 for i in range(len(allAdds)):
@@ -289,6 +293,7 @@ linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
+plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 for i in range(len(allAdds)):
@@ -307,6 +312,7 @@ linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
+plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 
