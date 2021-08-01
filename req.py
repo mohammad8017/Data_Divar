@@ -1,4 +1,5 @@
 import numpy
+from numpy.lib.function_base import average
 import requests
 import json
 from datetime import date
@@ -179,24 +180,45 @@ adsDict = {}
 
 
 #--------------visualization-----------------
-usageTmp, yearTmp, brandTmp = [], [], []
+usageTmp, yearTmp, brandTmp, priceTmp = [], [], [], []
 for ad in allAdds:
 	usageTmp.append(int(ad[5]))
-	yearTmp.append(int(ad[3]))
+	yearTmp.append(1400 - int(ad[3]))
 	brandTmp.append(brandExist.index(ad[2]))
+	priceTmp.append(int(ad[4]))
 
-plt.subplot(3,1,1)
-plt.plot(yearTmp, usageTmp, 'ro')
+
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(yearTmp[i], usageTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(yearTmp[i], usageTmp[i], 'ro')
+	else:
+		plt.plot(yearTmp[i], usageTmp[i], 'yo')		
 plt.xlabel('year') 
 plt.ylabel('usage')
+plt.show()
 
-plt.subplot(3,1,2)
-plt.plot(brandTmp, usageTmp, 'ro')
+
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(brandTmp[i], usageTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(brandTmp[i], usageTmp[i], 'ro')
+	else:
+		plt.plot(brandTmp[i], usageTmp[i], 'yo')	
 plt.xlabel('brand') 
 plt.ylabel('usage')
+plt.show()
 
-plt.subplot(3,1,3)
-plt.plot(brandTmp, yearTmp, 'ro')
+
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(brandTmp[i], yearTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(brandTmp[i], yearTmp[i], 'ro')
+	else:
+		plt.plot(brandTmp[i], yearTmp[i], 'yo')
 plt.xlabel('brand') 
 plt.ylabel('year')
 plt.show()
@@ -215,20 +237,37 @@ brandTmp = numpy.asarray(brandTmp)
 brandTmp = preprocessing.normalize([brandTmp])
 brandTmp = (brandTmp.tolist())[0]
 
-plt.subplot(1,3,1)
-plt.plot(yearTmp, usageTmp, 'ro')
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(yearTmp[i], usageTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(yearTmp[i], usageTmp[i], 'ro')
+	else:
+		plt.plot(yearTmp[i], usageTmp[i], 'yo')	
 plt.xlabel('year') 
 plt.ylabel('usage')
 plt.title('normalize')
+plt.show()
 
-plt.subplot(1,3,2)
-plt.plot(brandTmp, usageTmp, 'ro')
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(brandTmp[i], usageTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(brandTmp[i], usageTmp[i], 'ro')
+	else:
+		plt.plot(brandTmp[i], usageTmp[i], 'yo')
 plt.xlabel('brand') 
 plt.ylabel('usage')
 plt.title('normalize')
+plt.show()
 
-plt.subplot(1,3,3)
-plt.plot(brandTmp, yearTmp, 'ro')
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(brandTmp[i], yearTmp[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(brandTmp[i], yearTmp[i], 'ro')
+	else:
+		plt.plot(brandTmp[i], yearTmp[i], 'yo')
 plt.xlabel('brand') 
 plt.ylabel('year')
 plt.title('normalize')
@@ -262,16 +301,34 @@ x = p.components_
 temp = x.tolist()
 x1, x2, x3 = x[0], x[1], x[2]
 
-plt.subplot(1,3,1)
-plt.plot(x1, x2, 'ro')
-plt.title('after PCA')
 
-plt.subplot(1,3,2)
-plt.plot(x1, x3, 'ro')
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(x1[i], x2[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(x1[i], x2[i], 'ro')
+	else:
+		plt.plot(x1[i], x2[i], 'yo')
 plt.title('after PCA')
+plt.show()
 
-plt.subplot(1,3,3)
-plt.plot(x2, x3, 'ro')
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(x1[i], x3[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(x1[i], x3[i], 'ro')
+	else:
+		plt.plot(x1[i], x3[i], 'yo')
+plt.title('after PCA')
+plt.show()
+
+for i in range(len(allAdds)):
+	if priceTmp[i] > average(priceTmp) + 3000000:
+		plt.plot(x2[i], x3[i], 'go')
+	elif priceTmp[i] < average(priceTmp) - 3000000:
+		plt.plot(x2[i], x3[i], 'ro')
+	else:
+		plt.plot(x2[i], x3[i], 'yo')
 plt.title('after PCA')
 plt.show()
 
