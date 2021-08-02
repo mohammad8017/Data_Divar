@@ -15,10 +15,19 @@ from sklearn.decomposition import PCA
 
 
 
+def findAvg(brands:list, prices:list, brand):
+	count, sum = 0, 0
+	for i in range(len(brands)):
+		if brands[i] == brand:
+			sum += prices[i]
+			count += 1
+
+	return sum/count		
+
 
 
 def changeNumToEnglish(tmpStr:str): # data cleaning
-	return tmpStr.replace('٫','').replace('۰','0').replace('۱','1').replace('۲','2').replace('۳','3').replace('۴','4').replace('۵','5').replace('۶','6').replace('۷','7').replace('۸','8').replace('۹','9').replace(' تومان', '').replace('توافقی', '0').replace('،' , ' ').replace('هستم', '0')
+	return tmpStr.replace('٫','').replace('۰','0').replace('۱','1').replace('۲','2').replace('۳','3').replace('۴','4').replace('۵','5').replace('۶','6').replace('۷','7').replace('۸','8').replace('۹','9').replace(' تومان', '').replace('توافقی', '0').replace('،' , ' ').replace('هستم', '0').replace('قبل از', '')
 
 
 def findBrands(txt:str):
@@ -59,14 +68,14 @@ payload = json.dumps({
 		"value": "motorcycles"
 		}
 	},
-	"last-post-date": 664288732707541
+	"last-post-date": 664444352522061
 	})
 headers = {
 'Content-Type': 'application/json',
 'Cookie': 'city=tehran; multi-city=tehran%7C'
 }
 
-tmpLast = '664288732707541'
+tmpLast = '664444352522061'
 
 file = open("C:/Users/Lenovo/Desktop/tamrin/Data_Divar/out.csv", 'w', newline="", encoding="utf-8")
 writeFile = csv.writer(file, quoting=csv.QUOTE_NONE)
@@ -188,10 +197,80 @@ for ad in allAdds:
 	priceTmp.append(int(ad[4]))
 
 
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
+
+plt.boxplot(usageTmp)
+plt.title('usage')
+plt.show()
+
+q1 = numpy.quantile(usageTmp, 0.25)
+q3 = numpy.quantile(usageTmp, 0.75)
+med = numpy.median(usageTmp)
+iqr = q3-q1
+upper_bound = q3+(1.5*iqr)
+lower_bound = q1-(1.5*iqr)
+
+tmp = []
+for i in range(len(usageTmp)):
+	if usageTmp[i] > upper_bound or usageTmp[i] < lower_bound:
+		tmp.append(usageTmp.index(usageTmp[i]))
+tmp.reverse()		
+for i in range(len(tmp)):
+	n = usageTmp.pop(tmp[i])
+	n = brandTmp.pop(tmp[i])
+	n = yearTmp.pop(tmp[i])
+	n = priceTmp.pop(tmp[i])		
+#--------------------
+plt.boxplot(yearTmp)
+plt.title('year')
+plt.show()
+
+q1 = numpy.quantile(yearTmp, 0.25)
+q3 = numpy.quantile(yearTmp, 0.75)
+med = numpy.median(yearTmp)
+iqr = q3-q1
+upper_bound = q3+(1.5*iqr)
+lower_bound = q1-(1.5*iqr)
+
+tmp = []
+for i in range(len(yearTmp)):
+	if yearTmp[i] > upper_bound or yearTmp[i] < lower_bound:
+		tmp.append(yearTmp.index(yearTmp[i]))
+tmp.reverse()		
+for i in range(len(tmp)):
+	n = usageTmp.pop(tmp[i])
+	n = brandTmp.pop(tmp[i])
+	n = yearTmp.pop(tmp[i])
+	n = priceTmp.pop(tmp[i])
+
+#--------------------
+plt.boxplot(brandTmp)
+plt.title('brand')
+plt.show()
+
+q1 = numpy.quantile(brandTmp, 0.25)
+q3 = numpy.quantile(brandTmp, 0.75)
+med = numpy.median(brandTmp)
+iqr = q3-q1
+upper_bound = q3+(1.5*iqr)
+lower_bound = q1-(1.5*iqr)
+
+tmp = []
+for i in range(len(brandTmp)):
+	if brandTmp[i] > upper_bound or brandTmp[i] < lower_bound:
+		tmp.append(brandTmp.index(brandTmp[i]))
+tmp.reverse()		
+for i in range(len(tmp)):
+	n = usageTmp.pop(tmp[i])
+	n = brandTmp.pop(tmp[i])
+	n = yearTmp.pop(tmp[i])
+	n = priceTmp.pop(tmp[i])
+
+#--------------------
+
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 30000000:
 		plt.plot(yearTmp[i], usageTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
+	elif priceTmp[i] < 2500000:
 		plt.plot(yearTmp[i], usageTmp[i], 'ro')
 	else:
 		plt.plot(yearTmp[i], usageTmp[i], 'yo')		
@@ -207,10 +286,10 @@ plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 30000000:
 		plt.plot(brandTmp[i], usageTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
+	elif priceTmp[i] < 25000000:
 		plt.plot(brandTmp[i], usageTmp[i], 'ro')
 	else:
 		plt.plot(brandTmp[i], usageTmp[i], 'yo')	
@@ -226,10 +305,10 @@ plt.title(numpy.poly1d(linear_model_fn))
 plt.show()
 
 
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 30000000:
 		plt.plot(brandTmp[i], yearTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
+	elif priceTmp[i] < 25000000:
 		plt.plot(brandTmp[i], yearTmp[i], 'ro')
 	else:
 		plt.plot(brandTmp[i], yearTmp[i], 'yo')
@@ -246,73 +325,78 @@ plt.show()
 
 
 #--------------normalization-----------------
-usageTmp = numpy.asarray(usageTmp)
-usageTmp = preprocessing.normalize([usageTmp])
-usageTmp = (usageTmp.tolist())[0]
 
-yearTmp = numpy.asarray(yearTmp)
-yearTmp = preprocessing.normalize([yearTmp])
-yearTmp = (yearTmp.tolist())[0]
+# usageTmp = numpy.asarray(usageTmp)
+# usageTmp = preprocessing.normalize([usageTmp])
+# usageTmp = (usageTmp.tolist())[0]
 
-brandTmp = numpy.asarray(brandTmp)
-brandTmp = preprocessing.normalize([brandTmp])
-brandTmp = (brandTmp.tolist())[0]
+# yearTmp = numpy.asarray(yearTmp)
+# yearTmp = preprocessing.normalize([yearTmp])
+# yearTmp = (yearTmp.tolist())[0]
 
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
+# brandTmp = numpy.asarray(brandTmp)
+# brandTmp = preprocessing.normalize([brandTmp])
+# brandTmp = (brandTmp.tolist())[0]
+
+for i in range(len(usageTmp)):
+	usageTmp[i] = (usageTmp[i] - min(usageTmp)) / (max(usageTmp) - min(usageTmp))
+	yearTmp[i] = (yearTmp[i] - min(yearTmp)) / (max(yearTmp) - min(yearTmp))
+	brandTmp[i] = (brandTmp[i] - min(brandTmp)) / (max(brandTmp) - min(brandTmp))
+
+		#---------------------------
+
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 30000000:
 		plt.plot(yearTmp[i], usageTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
+	elif priceTmp[i] < 25000000:
 		plt.plot(yearTmp[i], usageTmp[i], 'ro')
 	else:
 		plt.plot(yearTmp[i], usageTmp[i], 'yo')	
 plt.xlabel('year') 
 plt.ylabel('usage')
-plt.title('normalize')
 
 linear_model=numpy.polyfit(yearTmp, usageTmp,1)
 linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(yearTmp), max(yearTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
-plt.title(numpy.poly1d(linear_model_fn))
+plt.title('normalize' + str(numpy.poly1d(linear_model_fn)))
 plt.show()
 
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 30000000:
 		plt.plot(brandTmp[i], usageTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
+	elif priceTmp[i] < 25000000:
 		plt.plot(brandTmp[i], usageTmp[i], 'ro')
 	else:
 		plt.plot(brandTmp[i], usageTmp[i], 'yo')
 plt.xlabel('brand') 
 plt.ylabel('usage')
-plt.title('normalize')
 
 linear_model=numpy.polyfit(brandTmp, usageTmp,1)
 linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
-plt.title(numpy.poly1d(linear_model_fn))
+plt.title('normalize' + str(numpy.poly1d(linear_model_fn)))
 plt.show()
 
-for i in range(len(allAdds)):
-	if priceTmp[i] > average(priceTmp) + 3000000:
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 30000000:
 		plt.plot(brandTmp[i], yearTmp[i], 'go')
-	elif priceTmp[i] < average(priceTmp) - 3000000:
+	elif priceTmp[i] < 25000000:
 		plt.plot(brandTmp[i], yearTmp[i], 'ro')
 	else:
 		plt.plot(brandTmp[i], yearTmp[i], 'yo')
 plt.xlabel('brand') 
 plt.ylabel('year')
-plt.title('normalize')
 
 linear_model=numpy.polyfit(brandTmp, yearTmp,1)
 linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
-plt.title(numpy.poly1d(linear_model_fn))
+plt.title('normalize' + str(numpy.poly1d(linear_model_fn)))
 plt.show()
 
 
@@ -341,7 +425,7 @@ temp = x.tolist()
 x1, x2, x3 = x[0], x[1], x[2]
 
 
-for i in range(len(allAdds)):
+for i in range(len(yearTmp)):
 	if priceTmp[i] > average(priceTmp) + 3000000:
 		plt.plot(x1[i], x2[i], 'go')
 	elif priceTmp[i] < average(priceTmp) - 3000000:
@@ -355,7 +439,7 @@ x_s=numpy.arange(min(x1), max(x1)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 plt.show()
 
-for i in range(len(allAdds)):
+for i in range(len(yearTmp)):
 	if priceTmp[i] > average(priceTmp) + 3000000:
 		plt.plot(x1[i], x3[i], 'go')
 	elif priceTmp[i] < average(priceTmp) - 3000000:
@@ -369,7 +453,7 @@ x_s=numpy.arange(min(x1), max(x1)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 plt.show()
 
-for i in range(len(allAdds)):
+for i in range(len(yearTmp)):
 	if priceTmp[i] > average(priceTmp) + 3000000:
 		plt.plot(x2[i], x3[i], 'go')
 	elif priceTmp[i] < average(priceTmp) - 3000000:
