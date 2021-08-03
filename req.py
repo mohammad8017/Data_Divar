@@ -93,7 +93,7 @@ counter = 0
 
 allAdds = [] #all adds stored in file
 
-for step in range(1):
+for step in range(5):
 
 	response = requests.request("POST", url, headers=headers, data=payload)
 	txt = response.text
@@ -266,6 +266,8 @@ for i in range(len(tmp)):
 	n = priceTmp.pop(tmp[i])
 
 #--------------------
+print("remove outliers")
+print('OK Data :', str(len(priceTmp)))
 
 for i in range(len(yearTmp)):
 	if priceTmp[i] > 30000000:
@@ -321,6 +323,21 @@ x_s=numpy.arange(min(brandTmp), max(brandTmp)+1)
 plt.plot(x_s,linear_model_fn(x_s),color="blue")
 
 plt.title(numpy.poly1d(linear_model_fn))
+plt.show()
+
+
+plot = plt.axes(projection = '3d')
+colors = []
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 3000000:
+		colors.append('green')
+	elif priceTmp[i] < 2500000:
+		colors.append('red')
+	else:
+		colors.append('yellow')		
+colors = numpy.array(colors)	
+plot.scatter(yearTmp, usageTmp, brandTmp, c = colors)
+plot.set_title('3d plot (year - usage - brand)')
 plt.show()
 
 
@@ -399,6 +416,20 @@ plt.plot(x_s,linear_model_fn(x_s),color="blue")
 plt.title('normalize' + str(numpy.poly1d(linear_model_fn)))
 plt.show()
 
+
+plot = plt.axes(projection = '3d')
+colors = []
+for i in range(len(yearTmp)):
+	if priceTmp[i] > 3000000:
+		colors.append('green')
+	elif priceTmp[i] < 2500000:
+		colors.append('red')
+	else:
+		colors.append('yellow')		
+colors = numpy.array(colors)		
+plot.scatter(yearTmp, usageTmp, brandTmp, c = colors)
+plot.set_title('Normalize 3d plot (year - usage - brand)')
+plt.show()
 
 
 T_test = []
