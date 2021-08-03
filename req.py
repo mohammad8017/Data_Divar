@@ -82,7 +82,7 @@ writeFile = csv.writer(file, quoting=csv.QUOTE_NONE)
 writeFile.writerow(['title', ' kind of sale', 'brand', 'year', 'price', 'usage', 'explanation'])
 
 tmpToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiMDkxMDAwMzk3MzAiLCJleHAiOjE2Mjg0OTM2ODAuNDE0MjI3LCJ2ZXJpZmllZF90aW1lIjoxNjI3MTk3NjgwLjQxNDIyNSwidXNlci10eXBlIjoicGVyc29uYWwiLCJ1c2VyLXR5cGUtZmEiOiJcdTA2N2VcdTA2NDZcdTA2NDQgXHUwNjM0XHUwNjJlXHUwNjM1XHUwNmNjIn0.T528R8fW1HUErJKRBI-XlaJvpEOuBhdCAEXqIXw7P_o'
-headers['Authorization'] = tmpToken
+headers['Authorization'] = tmpToken # token for sign in to Divar.ir
 
 #eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiMDkxMDAwMzk3MzAiLCJleHAiOjE2Mjg1OTQ4NDEuOTkwMDg1LCJ2ZXJpZmllZF90aW1lIjoxNjI3Mjk4ODQxLjk5MDU0LCJ1c2VyLXR5cGUiOiJwZXJzb25hbCIsInVzZXItdHlwZS1mYSI6Ilx1MDY3ZVx1MDY0Nlx1MDY0NCBcdTA2MzRcdTA2MmVcdTA2MzVcdTA2Y2MifQ.C6EJfXaxDILThoWk7jgunG4NMPe0a_pnXPyfrdn3Qp0
 
@@ -102,7 +102,7 @@ for step in range(5):
 	
 	findLinkReg = "\"token\":\"(.*?)\","
 
-	links = re.findall(findLinkReg, txt)
+	links = re.findall(findLinkReg, txt) #find tokens of ads
 			
 	for i in range(len(links)):
 		links[i] = 'https://divar.ir/v/' + links[i]
@@ -148,7 +148,7 @@ for step in range(5):
 		if baseInfo2[1] not in brandExist:
 			brandExist.append(baseInfo2[1])
 
-		tmpExp = ''
+		tmpExp = '' # cleamimg data
 		try:
 			tmpExp = changeNumToEnglish(exp[0])
 		except:
@@ -159,7 +159,7 @@ for step in range(5):
 		counter += 1
 		print('OK '+ str(step+1) + '.' + str(links.index(link)+1))	
 
-	findLastPostDateReg = "\"last_post_date\":([0-9]+)\,"
+	findLastPostDateReg = "\"last_post_date\":([0-9]+)\,"  #update last post date to give new data
 	last = re.findall(findLastPostDateReg, txt)
 	tmp = list(payload)
 	for i in range(15):
@@ -197,7 +197,7 @@ for ad in allAdds:
 	priceTmp.append(int(ad[4]))
 
 
-
+# draw box plot of year, usage and brand and remove outlier data
 plt.boxplot(usageTmp)
 plt.title('usage')
 plt.show()
@@ -278,7 +278,7 @@ for i in range(len(yearTmp)):
 		plt.plot(yearTmp[i], usageTmp[i], 'yo')		
 plt.xlabel('year') 
 plt.ylabel('usage')
-
+#find linear equivalence of plot
 linear_model=numpy.polyfit(yearTmp, usageTmp,1)
 linear_model_fn=numpy.poly1d(linear_model)
 x_s=numpy.arange(min(yearTmp), max(yearTmp)+1)
@@ -355,7 +355,7 @@ plt.show()
 # brandTmp = preprocessing.normalize([brandTmp])
 # brandTmp = (brandTmp.tolist())[0]
 
-for i in range(len(usageTmp)):
+for i in range(len(usageTmp)): # normalize data           formula = (x - xMin) / (xMax - xMin)
 	usageTmp[i] = (usageTmp[i] - min(usageTmp)) / (max(usageTmp) - min(usageTmp))
 	yearTmp[i] = (yearTmp[i] - min(yearTmp)) / (max(yearTmp) - min(yearTmp))
 	brandTmp[i] = (brandTmp[i] - min(brandTmp)) / (max(brandTmp) - min(brandTmp))
@@ -431,7 +431,7 @@ plot.scatter(yearTmp, usageTmp, brandTmp, c = colors)
 plot.set_title('Normalize 3d plot (year - usage - brand)')
 plt.show()
 
-
+# T-test and find two more similar groups
 T_test = []
 t, p = ttest_ind(usageTmp, yearTmp)
 T_test.append(p)
@@ -446,7 +446,7 @@ elif ind == 1: print('most similarity : usage & brand')
 else: print('most similarity : year & brand')
 
 
-
+# calculate PCA
 arr = [usageTmp, yearTmp, brandTmp]
 pca = PCA(n_components=3)
 p = pca.fit(arr)
